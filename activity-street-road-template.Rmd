@@ -1,6 +1,6 @@
 ---
 title: "Activity: Street or Road?"
-author: "YOUR NAME HERE"
+author: "Daniel Gao"
 output: html_notebook
 ---
 
@@ -8,33 +8,36 @@ output: html_notebook
 
 ```{r}
 #load libraries 
-
+library(tidyverse)
 #load in the data here 
 # we will only be using the "street-addresses.csv" file from the text
-
-
+Addresses <- read_csv("https://mdbeckman.github.io/dcSupplement/data/street-addresses.csv")
 
 ```
 
 ## Recreate Solved Example using `sample(50)`
 
 ```{r}
-
+Sample <- Addresses %>%
+  sample(size = 50, replace = T)
 
 ```
 
 ## Recreate Soved Example using the entire `Address` data set
 
 ```{r}
-
+Matches <- 
+  Addresses %>%
+  filter(grepl(pattern = "PO", address))
 
 ```
 
 #### Additional Question: How many addresses are a PO BOX (including NCSU BOX)? 
 
 ```{r}
-
-
+Addresses %>%
+  filter(grepl(pattern = "(PO|NSCU)", address)) %>%
+  summarise(addresses = n())
 ```
 
 My answer here...... 
@@ -55,21 +58,26 @@ LeftOvers <-
 ```
 
 My answer here.......
+Line 1: Assign "(ST|RD|ROAD)" to the pattern
+Line 2: Assign Leftover with results from the code below
+Line 3: Addresses data is accessed through a pipe
+Line 4: filters out adresses that does not contain ST or RD or ROAD  in the variable address. The grepl fucntion allows for pattern matching.
+Line 5: filters out adresses that does not contain APT or UNIT along any white spaces AND any digits. The grepl allows for pattern matching.
+Line 6: filters out any address with does not contains " BOX " exactly.The grepl allows for pattern matching.
+
 
 #### Part 2: Implement your method on the entire `Addresses` data set. Explain how your code works line by line.
 
 ```{r}
 
-
+         
 
 ```
 
-My answer here.......
 
 #### Additional Question 1: Present your result from part 2 by providing a table in descending order of popularity for the street name endings you found
 
 ```{r}
-
 
 ```
 
@@ -78,7 +86,13 @@ My answer here.......
 Note: make sure your order street names according to popularity, not alphabetically.
 
 ```{r}
-
+Test %>% 
+  group_by(address) %>%
+  summarise(popularity = n()) %>%
+  arrange(desc(popularity)) %>%
+  head(10) %>%
+  ggplot(aes(x = address, y = popularity)) +
+   geom_col(fill = "blue")
 ```
 
 #### Additional Question 3: Comment on any patterns you see
