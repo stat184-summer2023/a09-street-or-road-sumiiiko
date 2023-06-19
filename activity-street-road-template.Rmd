@@ -91,8 +91,9 @@ Test %>%
   summarise(popularity = n()) %>%
   arrange(desc(popularity)) %>%
   head(10) %>%
-  ggplot(aes(x = address, y = popularity)) +
-  geom_point(shape = "circle", size = 0.5)
+  ggplot(aes(x = reorder(address, -popularity), y = popularity)) +
+  geom_point(shape = "circle", size = 1) +
+  xlab("street name")
 
 ```
 
@@ -106,10 +107,12 @@ Test %>%
   summarise(popularity = n()) %>%
   arrange(desc(popularity)) %>%
   head(10) %>%
-  ggplot(aes(x = address, y = popularity)) +
-   geom_col(fill = "blue")
+  ggplot(aes(x = reorder(address, -popularity), y = popularity)) +
+  geom_col(fill = "blue") +
+  xlab("street name")
 ```
 
 #### Additional Question 3: Comment on any patterns you see
 
 My answer here.......
+In the top ten most common street name, the highest count of street name was 10 and the lowest count were below 2.5.  
