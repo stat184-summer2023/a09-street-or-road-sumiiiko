@@ -69,15 +69,30 @@ Line 6: filters out any address with does not contains " BOX " exactly.The grepl
 #### Part 2: Implement your method on the entire `Addresses` data set. Explain how your code works line by line.
 
 ```{r}
-
+patterns <- "(NSCU)"
+Test <-
+  Addresses %>% 
+  filter(grepl(pattern, address),
+         !grepl("RD|ROAD", address))
          
-
 ```
 
-
+My answer here.......
+Line 1: "(NSCU)" is assigned to patterns
+Line 2: Test is assigned to the result of the code below
+Line 3: Addresses data is access through a pipe
+Line 4: filters out the addresses that contains "NSCU". The grepl allows for pattern matching. 
+Line 5: filters out the addresses that does not RD or ROAD 
 #### Additional Question 1: Present your result from part 2 by providing a table in descending order of popularity for the street name endings you found
 
 ```{r}
+Test %>% 
+  group_by(address) %>%
+  summarise(popularity = n()) %>%
+  arrange(desc(popularity)) %>%
+  head(10) %>%
+  ggplot(aes(x = address, y = popularity)) +
+  geom_point(shape = "circle", size = 0.5)
 
 ```
 
