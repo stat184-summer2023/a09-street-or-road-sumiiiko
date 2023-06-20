@@ -74,24 +74,31 @@ Test <-
   Addresses %>% 
   filter(grepl(pattern, address),
          !grepl("RD|ROAD", address))
+         pattern <- "(ST|RD|ROAD)"
          
+
+pattern <- "(ST|RD|ROAD|DR|CT|LN|NSCU|APT|DRIVE)"
+New <-
+  Addresses %>% 
+  filter(grepl(pattern, address)) %>%
+   tidyr::extract(col = address, into = "Street", regex = pattern)
 ```
 
 My answer here.......
-Line 1: "(NSCU)" is assigned to patterns
-Line 2: Test is assigned to the result of the code below
+Line 1: "(ST|RD|ROAD|DR|CT|LN|NSCU|APT)" is assigned to patterns
+Line 2: New is assigned to the result of the code below
 Line 3: Addresses data is access through a pipe
-Line 4: filters out the addresses that contains "NSCU". The grepl allows for pattern matching. 
-Line 5: filters out the addresses that does not RD or ROAD 
+Line 4: filters out the addresses that contains ST or RD or ROAD or DR or CT or LN or NSCU or DRIVE. The grepl allows for pattern matching.
+Line 5: tidyr::extract() was used to extract only the names from pattern. 
 #### Additional Question 1: Present your result from part 2 by providing a table in descending order of popularity for the street name endings you found
 
 ```{r}
-Test %>% 
-  group_by(address) %>%
+New %>% 
+  group_by(Street) %>%
   summarise(popularity = n()) %>%
   arrange(desc(popularity)) %>%
   head(10) %>%
-  ggplot(aes(x = reorder(address, -popularity), y = popularity)) +
+  ggplot(aes(x = reorder(Street, -popularity), y = popularity)) +
   geom_point(shape = "circle", size = 1) +
   xlab("street name")
 
@@ -102,12 +109,12 @@ Test %>%
 Note: make sure your order street names according to popularity, not alphabetically.
 
 ```{r}
-Test %>% 
-  group_by(address) %>%
+New %>% 
+  group_by(Street) %>%
   summarise(popularity = n()) %>%
   arrange(desc(popularity)) %>%
   head(10) %>%
-  ggplot(aes(x = reorder(address, -popularity), y = popularity)) +
+  ggplot(aes(x = reorder(Street, -popularity), y = popularity)) +
   geom_col(fill = "blue") +
   xlab("street name")
 ```
@@ -115,4 +122,4 @@ Test %>%
 #### Additional Question 3: Comment on any patterns you see
 
 My answer here.......
-In the top ten most common street name, the highest count of street name was 10 and the lowest count were below 2.5.  
+Within 8 street names, ST was the most common, DR the second most common, and RD the third most common. NSCU is the least common street name.  
