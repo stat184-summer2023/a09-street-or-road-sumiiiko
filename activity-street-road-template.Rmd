@@ -36,11 +36,13 @@ Matches <-
 
 ```{r}
 Addresses %>%
-  filter(grepl(pattern = "(PO|NSCU)", address)) %>%
+  filter(grepl(pattern = "(PO BOX |NSCU BOX)", address)) %>%
   summarise(addresses = n())
-```
+s```
 
 My answer here...... 
+
+There are a total of 8249 address with PO BOX or NCSU BOX
 
 
 ## Back to the Streets: Your Turn
@@ -59,10 +61,16 @@ LeftOvers <-
 
 My answer here.......
 Line 1: Assign "(ST|RD|ROAD)" to the pattern
+
 Line 2: Assign Leftover with results from the code below
+
 Line 3: Addresses data is accessed through a pipe
-Line 4: filters out adresses that does not contain ST or RD or ROAD  in the variable address. The grepl fucntion allows for pattern matching.
+
+Line 4: filters out adresses that does not contain ST or RD or ROAD  in the variable address. The grepl
+fucntion allows for pattern matching.
+
 Line 5: filters out adresses that does not contain APT or UNIT along any white spaces AND any digits. The grepl allows for pattern matching.
+
 Line 6: filters out any address with does not contains " BOX " exactly.The grepl allows for pattern matching.
 
 
@@ -86,10 +94,15 @@ New <-
 
 My answer here.......
 Line 1: "(ST|RD|ROAD|DR|CT|LN|NSCU|APT)" is assigned to patterns
+
 Line 2: New is assigned to the result of the code below
+
 Line 3: Addresses data is access through a pipe
+
 Line 4: filters out the addresses that contains ST or RD or ROAD or DR or CT or LN or NSCU or DRIVE. The grepl allows for pattern matching.
+
 Line 5: tidyr::extract() was used to extract only the names from pattern. 
+
 #### Additional Question 1: Present your result from part 2 by providing a table in descending order of popularity for the street name endings you found
 
 ```{r}
